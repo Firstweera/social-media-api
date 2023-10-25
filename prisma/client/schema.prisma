@@ -1,0 +1,71 @@
+model User {
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
+  password     String
+  fname        String
+  lname        String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  follows      User[]        @relation("follow")
+  tofollows    User[]        @relation("follow")
+  posts        Post[]
+  likes        LikePost[]
+  commentPosts CommentPost[]
+  // Feed         Feed[]
+}
+
+model Post {
+  id           Int           @id @default(autoincrement())
+  user         User          @relation(fields: [userId], references: [id])
+  userId       Int
+  message      String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  likes        LikePost[]
+  commentPosts CommentPost[]
+  // Feeds        Feed[]
+}
+
+model LikePost {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  posts     Post     @relation(fields: [postId], references: [id])
+  postId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CommentPost {
+  id           Int           @id @default(autoincrement())
+  post         Post          @relation(fields: [postId], references: [id])
+  postId       Int
+  user         User          @relation(fields: [userId], references: [id])
+  userId       Int
+  message      String
+  commentTo    CommentPost   @relation("replyComm", fields: [commentToId], references: [id])
+  commentToId  Int
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  commentPosts CommentPost[] @relation("replyComm")
+}
+
+// model Feed {
+//   id        Int      @id @default(autoincrement())
+//   user      User     @relation(fields: [userId], references: [id])
+//   userId    Int
+//   post      Post     @relation(fields: [postId], references: [id])
+//   postId    Int
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "darwin-arm64", "debian-openssl-1.1.x"]
+  output        = "../prisma/client"
+}

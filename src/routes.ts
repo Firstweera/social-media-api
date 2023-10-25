@@ -1,13 +1,13 @@
-import {
-  getTest1,
-  // postTest1,
-} from "./test";
+// import {
+//   getTest1,
+//   // postTest1,
+// } from "./test";
 
-export const AppRoutes = [
+// export const AppRoutes = [
 
-  {
-    path: "/getTest1",
-    method: "get",
-    action: getTest1,
-  },
-];
+//   {
+//     path: "/getTest1",
+//     method: "get",
+//     action: getTest1,
+//   },
+// ];
