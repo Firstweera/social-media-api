@@ -8,7 +8,7 @@ export const registerHandler = async (req: Request, res: Response) => {
   if (registerCodec.decode(args)._tag === "Right") {
     try {
       const result = await register(args);
-      res.status(200).json({ status: "ok" });
+      res.status(200).json({ status: "ok", data: result });
     } catch (e) {
       res.status(500).json({ error: String(e) });
     }
