@@ -1,31 +1,24 @@
-// import { PrismaClient } from "../../prisma/client";
-// import {
-//     IGetTest1
-// } from "./test.interface";
+import { PrismaClient } from "../../prisma/client";
+import { IRegister } from "./test.interface";
+export const prisma = new PrismaClient();
 
-// export const prisma = new PrismaClient();
+export const register = async (args: IRegister) => {
+  try {
+    // const hashPassword = await bcrypt.hash(
+    //   args.password,
+    //   Number(process.env.SALT_ROUNDS)
+    // );
 
-// export const getTest1 = (
-//   args: IGetTest1
-// ) => prisma.test1.create({
-//     // data: {
-//     //   name: args.name,
-//     //   answer: {
-//     //     create: {
-//     //       choice: args.answer,
-//     //     },
-//     //   },
-//     //   choices: {
-//     //     create: args.choices,
-//     //   },
-//     //   category: {
-//     //     connect: {
-//     //       id: args.categoryId,
-//     //     },
-//     //   },
-//     // },
-//     // include: {
-//     //   answer: true,
-//     //   choices: true
-//     // }
-//   });
+    await prisma.user.create({
+      data: {
+        email: args?.email,
+        password: args?.password,
+        fname: args?.fname,
+        lname: args?.lname,
+      },
+    });
+  } catch (e) {
+    console.error(e);
+    throw new Error("Register failed");
+  }
+};

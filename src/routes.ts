@@ -1,13 +1,9 @@
-// import {
-//   getTest1,
-//   // postTest1,
-// } from "./test";
+import { registerHandler } from "./test/test.handler";
 
-// export const AppRoutes = [
-
-//   {
-//     path: "/getTest1",
-//     method: "get",
-//     action: getTest1,
-//   },
-// ];
+export const AppRoutes = [
+  {
+    path: "/register",
+    method: "post",
+    action: registerHandler,
+  },
+];
