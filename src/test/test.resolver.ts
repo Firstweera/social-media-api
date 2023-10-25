@@ -1,18 +1,20 @@
 import { PrismaClient } from "../../prisma/client";
 import { IRegister } from "./test.interface";
+import bcrypt from "bcrypt";
+
 export const prisma = new PrismaClient();
 
 export const register = async (args: IRegister) => {
   try {
-    // const hashPassword = await bcrypt.hash(
-    //   args.password,
-    //   Number(process.env.SALT_ROUNDS)
-    // );
+    const hashPassword = await bcrypt.hash(
+      args.password,
+      Number(process.env.SALT_ROUNDS)
+    );
 
     await prisma.user.create({
       data: {
         email: args?.email,
-        password: args?.password,
+        password: hashPassword,
         fname: args?.fname,
         lname: args?.lname,
       },
