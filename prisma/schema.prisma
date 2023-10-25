@@ -11,6 +11,7 @@ model User {
   posts        Post[]
   likes        LikePost[]
   commentPosts CommentPost[]
+  // Feed         Feed[]
 }
 
 model Post {
@@ -22,6 +23,7 @@ model Post {
   updatedAt    DateTime      @updatedAt
   likes        LikePost[]
   commentPosts CommentPost[]
+  // Feeds        Feed[]
 }
 
 model LikePost {
@@ -48,6 +50,15 @@ model CommentPost {
   commentPosts CommentPost[] @relation("replyComm")
 }
 
+// model Feed {
+//   id        Int      @id @default(autoincrement())
+//   user      User     @relation(fields: [userId], references: [id])
+//   userId    Int
+//   post      Post     @relation(fields: [postId], references: [id])
+//   postId    Int
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
