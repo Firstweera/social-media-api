@@ -150,7 +150,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/weeraphat/sm-api/social-media-api/prisma/client",
+      "value": "C:\\Users\\First\\LeranBackEnd\\socialmedia-api\\prisma\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -159,7 +159,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin",
+        "value": "windows",
         "native": true
       },
       {

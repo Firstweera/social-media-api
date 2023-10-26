@@ -1,6 +1,5 @@
-import { throwError } from "fp-ts/lib/Option";
 import { PrismaClient } from "../../prisma/client";
-import { ILogin, IRegister } from "../interfaces";
+import { IEditUser, IFollow, ILogin, IProfile, IRegister } from "../interfaces";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -21,6 +20,10 @@ export const register = async (args: IRegister) => {
         lname: args?.lname,
       },
     });
+
+    return {
+      status: "ok",
+    };
   } catch (e) {
     console.error(e);
     throw new Error("Register failed");
@@ -29,30 +32,27 @@ export const register = async (args: IRegister) => {
 
 export const login = async (args: ILogin) => {
   try {
-    console.log("test login", args);
+    if (!args.email || !args.password) {
+      throw new Error("Email and password are required.");
+    }
 
-    const findUser = await prisma.user.findMany({
+    const [user] = await prisma.user.findMany({
       where: {
-        email: args?.email,
+        email: args.email,
       },
     });
 
-    if (findUser?.length === 0) {
-      throw new Error("User not found");
+    if (!user) {
+      throw new Error("User not found.");
     }
 
-    const isLogin = await bcrypt.compare(args?.password, findUser[0]?.password);
-
-    console.log("isLogin", isLogin);
-    console.log("findUser", findUser);
+    const isLogin = await bcrypt.compare(args.password, user.password);
 
     if (isLogin) {
+      const { email, fname, lname, id } = user;
+
       const token = jwt.sign(
-        {
-          email: findUser[0]?.email,
-          firstname: findUser[0]?.fname,
-          userId: findUser[0]?.id,
-        },
+        { email, firstName: fname, lastName: lname, userId: id },
         process.env.JWT_SECRET_KEY as string,
         {
           expiresIn: process.env.JWT_EXPIRES_IN,
@@ -61,12 +61,100 @@ export const login = async (args: ILogin) => {
 
       return token;
     } else {
-      console.log("Password !!!");
-
-      throw new Error("Password !!!");
+      throw new Error("Password is incorrect.");
     }
   } catch (e) {
     console.error(e);
-    throw new Error(`Login error: ${e}`);
+    throw new Error(`${e}`);
+  }
+};
+
+export const authentication = async (authHeader: string) => {
+  try {
+    const token = authHeader?.split(" ")[1];
+    console.log("token", token);
+    const decoded = jwt.verify(token, process.env.SECRET_KEY as string);
+    return decoded;
+  } catch (e) {
+    console.error(e);
+    throw new Error("Authentication failed");
+  }
+};
+
+export const profile = async (args: IProfile) => {
+  try {
+    const profile = await prisma.user.findUnique({
+      where: {
+        id: args?.userId,
+      },
+    });
+
+    if (!profile) {
+      throw new Error("User not found.");
+    }
+
+    return {
+      id: profile.id,
+      fname: profile.fname,
+      lname: profile.lname,
+    };
+  } catch (e) {
+    console.error(e);
+    throw new Error("GET Profile failed");
+  }
+};
+
+export const editProfile = async (args: IEditUser) => {
+  try {
+    const edit = await prisma.user.update({
+      where: { id: args?.userId },
+      data: {
+        fname: args?.fname ?? undefined,
+        lname: args?.lname ?? undefined,
+      },
+    });
+
+    if (!edit) {
+      throw new Error("User not found.");
+    }
+  } catch (e) {
+    console.error(e);
+    throw new Error("Edit Profile failed");
+  }
+};
+
+export const follows = async (args: IFollow) => {
+  try {
+    const updatedUser = await prisma.user.update({
+      where: { id: args?.friendId },
+      data: { follows: { connect: { id: args?.userId } } },
+    });
+
+    if (!updatedUser) {
+      throw new Error("User not found or unable to follow.");
+    }
+
+    return updatedUser;
+  } catch (e: any) {
+    console.error(e);
+    throw new Error("Follow failed: " + e.message);
+  }
+};
+
+export const unFollows = async (args: IFollow) => {
+  try {
+    const updatedUser = await prisma.user.update({
+      where: { id: args?.friendId },
+      data: { follows: { disconnect: { id: args?.userId } } },
+    });
+
+    if (!updatedUser) {
+      throw new Error("User not found or unable to follow.");
+    }
+
+    return updatedUser;
+  } catch (e: any) {
+    console.error(e);
+    throw new Error("Follow failed: " + e.message);
   }
 };
