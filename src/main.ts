@@ -1,13 +1,14 @@
 import express, { Application } from "express";
-import { AppRoutes } from "./routes";
 import cors from "cors";
+import { UserRoutes } from "./routes";
+
 
 const app: Application = express();
 
 app.use(cors());
 app.use(express.json());
 
-AppRoutes.forEach((route) => {
+UserRoutes.forEach((route) => {
   app[route.method as keyof Application](route.path, route.action);
 });
 

@@ -30,12 +30,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 5.2.0
- * Query Engine version: 475c616176945d72f4330c92801f0c5e6398dc0f
+ * Prisma Client JS version: 5.5.2
+ * Query Engine version: aebc046ce8b88ebbcb45efe31cbe7d06fd6abc0a
  */
 Prisma.prismaVersion = {
-  client: "5.2.0",
-  engine: "475c616176945d72f4330c92801f0c5e6398dc0f"
+  client: "5.5.2",
+  engine: "aebc046ce8b88ebbcb45efe31cbe7d06fd6abc0a"
 }
 
 Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
@@ -151,7 +151,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\First\\LeranBackEnd\\socialmedia-api\\prisma\\client",
+      "value": "/Users/weeraphat/sm-api/social-media-api/prisma/client",
       "fromEnvVar": null
     },
     "config": {
@@ -160,7 +160,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin",
         "native": true
       },
       {
@@ -180,8 +180,8 @@ const config = {
     "schemaEnvPath": "../../.env"
   },
   "relativePath": "..",
-  "clientVersion": "5.2.0",
-  "engineVersion": "475c616176945d72f4330c92801f0c5e6398dc0f",
+  "clientVersion": "5.5.2",
+  "engineVersion": "aebc046ce8b88ebbcb45efe31cbe7d06fd6abc0a",
   "datasourceNames": [
     "db"
   ],
@@ -234,8 +234,8 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "query_engine-windows.dll.node");
-path.join(process.cwd(), "prisma/client/query_engine-windows.dll.node")
+path.join(__dirname, "libquery_engine-darwin.dylib.node");
+path.join(process.cwd(), "prisma/client/libquery_engine-darwin.dylib.node")
 
 // file annotations for bundling tools to include these files
 path.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");

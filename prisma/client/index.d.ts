@@ -51,7 +51,7 @@ export type CommentPost = $Result.DefaultSelection<Prisma.$CommentPostPayload>
 export class PrismaClient<
   T extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
   U = 'log' extends keyof T ? T['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<T['log']> : never : never,
-  ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs
+  ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
 
@@ -252,8 +252,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 5.2.0
-   * Query Engine version: 475c616176945d72f4330c92801f0c5e6398dc0f
+   * Prisma Client JS version: 5.5.2
+   * Query Engine version: aebc046ce8b88ebbcb45efe31cbe7d06fd6abc0a
    */
   export type PrismaVersion = {
     client: string
@@ -679,11 +679,11 @@ export namespace Prisma {
   }
 
 
-  interface TypeMapCb extends $Utils.Fn<{extArgs: $Extensions.Args}, $Utils.Record<string, any>> {
+  interface TypeMapCb extends $Utils.Fn<{extArgs: $Extensions.InternalArgs}, $Utils.Record<string, any>> {
     returns: Prisma.TypeMap<this['params']['extArgs']>
   }
 
-  export type TypeMap<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
       modelProps: 'user' | 'post' | 'likePost' | 'commentPost'
       txIsolationLevel: Prisma.TransactionIsolationLevel
@@ -980,23 +980,19 @@ export namespace Prisma {
   export const defineExtension: $Extensions.ExtendsHook<'define', Prisma.TypeMapCb, $Extensions.DefaultArgs>
   export type DefaultPrismaClient = PrismaClient
   export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
-
   export interface PrismaClientOptions {
     /**
      * Overwrites the datasource url from your schema.prisma file
      */
     datasources?: Datasources
-
     /**
      * Overwrites the datasource url from your schema.prisma file
      */
     datasourceUrl?: string
-
     /**
      * @default "colorless"
      */
     errorFormat?: ErrorFormat
-
     /**
      * @example
      * ```
@@ -1005,15 +1001,15 @@ export namespace Prisma {
      * 
      * // Emit as events
      * log: [
-     *  { emit: 'stdout', level: 'query' },
-     *  { emit: 'stdout', level: 'info' },
-     *  { emit: 'stdout', level: 'warn' }
-     *  { emit: 'stdout', level: 'error' }
+     *   { emit: 'stdout', level: 'query' },
+     *   { emit: 'stdout', level: 'info' },
+     *   { emit: 'stdout', level: 'warn' }
+     *   { emit: 'stdout', level: 'error' }
      * ]
      * ```
      * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
      */
-    log?: Array<LogLevel | LogDefinition>
+    log?: (LogLevel | LogDefinition)[]
   }
 
   /* Types for Logging */
@@ -1113,7 +1109,7 @@ export namespace Prisma {
     commentPosts: number
   }
 
-  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     follows?: boolean | UserCountOutputTypeCountFollowsArgs
     tofollows?: boolean | UserCountOutputTypeCountTofollowsArgs
     posts?: boolean | UserCountOutputTypeCountPostsArgs
@@ -1126,7 +1122,7 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the UserCountOutputType
      */
@@ -1137,7 +1133,7 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountFollowsArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountFollowsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
   }
 
@@ -1145,7 +1141,7 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountTofollowsArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountTofollowsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
   }
 
@@ -1153,7 +1149,7 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountPostsArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PostWhereInput
   }
 
@@ -1161,7 +1157,7 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountLikesArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LikePostWhereInput
   }
 
@@ -1169,7 +1165,7 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountCommentPostsArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountCommentPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CommentPostWhereInput
   }
 
@@ -1184,7 +1180,7 @@ export namespace Prisma {
     commentPosts: number
   }
 
-  export type PostCountOutputTypeSelect<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     likes?: boolean | PostCountOutputTypeCountLikesArgs
     commentPosts?: boolean | PostCountOutputTypeCountCommentPostsArgs
   }
@@ -1194,7 +1190,7 @@ export namespace Prisma {
   /**
    * PostCountOutputType without action
    */
-  export type PostCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the PostCountOutputType
      */
@@ -1205,7 +1201,7 @@ export namespace Prisma {
   /**
    * PostCountOutputType without action
    */
-  export type PostCountOutputTypeCountLikesArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostCountOutputTypeCountLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LikePostWhereInput
   }
 
@@ -1213,7 +1209,7 @@ export namespace Prisma {
   /**
    * PostCountOutputType without action
    */
-  export type PostCountOutputTypeCountCommentPostsArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostCountOutputTypeCountCommentPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CommentPostWhereInput
   }
 
@@ -1227,7 +1223,7 @@ export namespace Prisma {
     commentPosts: number
   }
 
-  export type CommentPostCountOutputTypeSelect<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     commentPosts?: boolean | CommentPostCountOutputTypeCountCommentPostsArgs
   }
 
@@ -1236,7 +1232,7 @@ export namespace Prisma {
   /**
    * CommentPostCountOutputType without action
    */
-  export type CommentPostCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the CommentPostCountOutputType
      */
@@ -1247,7 +1243,7 @@ export namespace Prisma {
   /**
    * CommentPostCountOutputType without action
    */
-  export type CommentPostCountOutputTypeCountCommentPostsArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostCountOutputTypeCountCommentPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CommentPostWhereInput
   }
 
@@ -1348,7 +1344,7 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type UserAggregateArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Filter which User to aggregate.
      */
@@ -1420,7 +1416,7 @@ export namespace Prisma {
 
 
 
-  export type UserGroupByArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
     orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
     by: UserScalarFieldEnum[] | UserScalarFieldEnum
@@ -1463,7 +1459,7 @@ export namespace Prisma {
     >
 
 
-  export type UserSelect<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     email?: boolean
     password?: boolean
@@ -1489,7 +1485,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type UserInclude<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     follows?: boolean | User$followsArgs<ExtArgs>
     tofollows?: boolean | User$tofollowsArgs<ExtArgs>
     posts?: boolean | User$postsArgs<ExtArgs>
@@ -1499,7 +1495,7 @@ export namespace Prisma {
   }
 
 
-  export type $UserPayload<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
       follows: Prisma.$UserPayload<ExtArgs>[]
@@ -1508,7 +1504,7 @@ export namespace Prisma {
       likes: Prisma.$LikePostPayload<ExtArgs>[]
       commentPosts: Prisma.$CommentPostPayload<ExtArgs>[]
     }
-    scalars: $Extensions.GetResult<{
+    scalars: $Extensions.GetPayloadResult<{
       id: number
       email: string
       password: string
@@ -1523,12 +1519,12 @@ export namespace Prisma {
 
   type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
 
-  type UserCountArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = 
-    Omit<UserFindManyArgs, 'select' | 'include'> & {
+  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' > & {
       select?: UserCountAggregateInputType | true
     }
 
-  export interface UserDelegate<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> {
+  export interface UserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User'], meta: { name: 'User' } }
     /**
      * Find zero or one User that matches the filter.
@@ -1878,7 +1874,7 @@ export namespace Prisma {
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
     follows<T extends User$followsArgs<ExtArgs> = {}>(args?: Subset<T, User$followsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findMany'> | Null>;
@@ -1934,7 +1930,7 @@ export namespace Prisma {
   /**
    * User findUnique
    */
-  export type UserFindUniqueArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the User
      */
@@ -1953,7 +1949,7 @@ export namespace Prisma {
   /**
    * User findUniqueOrThrow
    */
-  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the User
      */
@@ -1972,7 +1968,7 @@ export namespace Prisma {
   /**
    * User findFirst
    */
-  export type UserFindFirstArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the User
      */
@@ -2021,7 +2017,7 @@ export namespace Prisma {
   /**
    * User findFirstOrThrow
    */
-  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the User
      */
@@ -2070,7 +2066,7 @@ export namespace Prisma {
   /**
    * User findMany
    */
-  export type UserFindManyArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the User
      */
@@ -2114,7 +2110,7 @@ export namespace Prisma {
   /**
    * User create
    */
-  export type UserCreateArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the User
      */
@@ -2133,7 +2129,7 @@ export namespace Prisma {
   /**
    * User createMany
    */
-  export type UserCreateManyArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The data used to create many Users.
      */
@@ -2145,7 +2141,7 @@ export namespace Prisma {
   /**
    * User update
    */
-  export type UserUpdateArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the User
      */
@@ -2168,7 +2164,7 @@ export namespace Prisma {
   /**
    * User updateMany
    */
-  export type UserUpdateManyArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The data used to update Users.
      */
@@ -2183,7 +2179,7 @@ export namespace Prisma {
   /**
    * User upsert
    */
-  export type UserUpsertArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the User
      */
@@ -2210,7 +2206,7 @@ export namespace Prisma {
   /**
    * User delete
    */
-  export type UserDeleteArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the User
      */
@@ -2229,7 +2225,7 @@ export namespace Prisma {
   /**
    * User deleteMany
    */
-  export type UserDeleteManyArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Filter which Users to delete
      */
@@ -2240,7 +2236,7 @@ export namespace Prisma {
   /**
    * User.follows
    */
-  export type User$followsArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type User$followsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the User
      */
@@ -2261,7 +2257,7 @@ export namespace Prisma {
   /**
    * User.tofollows
    */
-  export type User$tofollowsArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type User$tofollowsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the User
      */
@@ -2282,7 +2278,7 @@ export namespace Prisma {
   /**
    * User.posts
    */
-  export type User$postsArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type User$postsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Post
      */
@@ -2303,7 +2299,7 @@ export namespace Prisma {
   /**
    * User.likes
    */
-  export type User$likesArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type User$likesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the LikePost
      */
@@ -2324,7 +2320,7 @@ export namespace Prisma {
   /**
    * User.commentPosts
    */
-  export type User$commentPostsArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type User$commentPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the CommentPost
      */
@@ -2345,7 +2341,7 @@ export namespace Prisma {
   /**
    * User without action
    */
-  export type UserDefaultArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the User
      */
@@ -2441,7 +2437,7 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type PostAggregateArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Filter which Post to aggregate.
      */
@@ -2513,7 +2509,7 @@ export namespace Prisma {
 
 
 
-  export type PostGroupByArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PostWhereInput
     orderBy?: PostOrderByWithAggregationInput | PostOrderByWithAggregationInput[]
     by: PostScalarFieldEnum[] | PostScalarFieldEnum
@@ -2554,7 +2550,7 @@ export namespace Prisma {
     >
 
 
-  export type PostSelect<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type PostSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
     message?: boolean
@@ -2574,7 +2570,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type PostInclude<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     likes?: boolean | Post$likesArgs<ExtArgs>
     commentPosts?: boolean | Post$commentPostsArgs<ExtArgs>
@@ -2582,14 +2578,14 @@ export namespace Prisma {
   }
 
 
-  export type $PostPayload<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type $PostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Post"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       likes: Prisma.$LikePostPayload<ExtArgs>[]
       commentPosts: Prisma.$CommentPostPayload<ExtArgs>[]
     }
-    scalars: $Extensions.GetResult<{
+    scalars: $Extensions.GetPayloadResult<{
       id: number
       userId: number
       message: string
@@ -2602,12 +2598,12 @@ export namespace Prisma {
 
   type PostGetPayload<S extends boolean | null | undefined | PostDefaultArgs> = $Result.GetResult<Prisma.$PostPayload, S>
 
-  type PostCountArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = 
-    Omit<PostFindManyArgs, 'select' | 'include'> & {
+  type PostCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<PostFindManyArgs, 'select' | 'include' | 'distinct' > & {
       select?: PostCountAggregateInputType | true
     }
 
-  export interface PostDelegate<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> {
+  export interface PostDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Post'], meta: { name: 'Post' } }
     /**
      * Find zero or one Post that matches the filter.
@@ -2957,7 +2953,7 @@ export namespace Prisma {
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__PostClient<T, Null = never, ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__PostClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
@@ -3007,7 +3003,7 @@ export namespace Prisma {
   /**
    * Post findUnique
    */
-  export type PostFindUniqueArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Post
      */
@@ -3026,7 +3022,7 @@ export namespace Prisma {
   /**
    * Post findUniqueOrThrow
    */
-  export type PostFindUniqueOrThrowArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Post
      */
@@ -3045,7 +3041,7 @@ export namespace Prisma {
   /**
    * Post findFirst
    */
-  export type PostFindFirstArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Post
      */
@@ -3094,7 +3090,7 @@ export namespace Prisma {
   /**
    * Post findFirstOrThrow
    */
-  export type PostFindFirstOrThrowArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Post
      */
@@ -3143,7 +3139,7 @@ export namespace Prisma {
   /**
    * Post findMany
    */
-  export type PostFindManyArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Post
      */
@@ -3187,7 +3183,7 @@ export namespace Prisma {
   /**
    * Post create
    */
-  export type PostCreateArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Post
      */
@@ -3206,7 +3202,7 @@ export namespace Prisma {
   /**
    * Post createMany
    */
-  export type PostCreateManyArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The data used to create many Posts.
      */
@@ -3218,7 +3214,7 @@ export namespace Prisma {
   /**
    * Post update
    */
-  export type PostUpdateArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Post
      */
@@ -3241,7 +3237,7 @@ export namespace Prisma {
   /**
    * Post updateMany
    */
-  export type PostUpdateManyArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The data used to update Posts.
      */
@@ -3256,7 +3252,7 @@ export namespace Prisma {
   /**
    * Post upsert
    */
-  export type PostUpsertArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Post
      */
@@ -3283,7 +3279,7 @@ export namespace Prisma {
   /**
    * Post delete
    */
-  export type PostDeleteArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Post
      */
@@ -3302,7 +3298,7 @@ export namespace Prisma {
   /**
    * Post deleteMany
    */
-  export type PostDeleteManyArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Filter which Posts to delete
      */
@@ -3313,7 +3309,7 @@ export namespace Prisma {
   /**
    * Post.likes
    */
-  export type Post$likesArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type Post$likesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the LikePost
      */
@@ -3334,7 +3330,7 @@ export namespace Prisma {
   /**
    * Post.commentPosts
    */
-  export type Post$commentPostsArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type Post$commentPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the CommentPost
      */
@@ -3355,7 +3351,7 @@ export namespace Prisma {
   /**
    * Post without action
    */
-  export type PostDefaultArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type PostDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Post
      */
@@ -3455,7 +3451,7 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type LikePostAggregateArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type LikePostAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Filter which LikePost to aggregate.
      */
@@ -3527,7 +3523,7 @@ export namespace Prisma {
 
 
 
-  export type LikePostGroupByArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type LikePostGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LikePostWhereInput
     orderBy?: LikePostOrderByWithAggregationInput | LikePostOrderByWithAggregationInput[]
     by: LikePostScalarFieldEnum[] | LikePostScalarFieldEnum
@@ -3568,7 +3564,7 @@ export namespace Prisma {
     >
 
 
-  export type LikePostSelect<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type LikePostSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
     postId?: boolean
@@ -3586,19 +3582,19 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type LikePostInclude<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type LikePostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     posts?: boolean | PostDefaultArgs<ExtArgs>
   }
 
 
-  export type $LikePostPayload<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type $LikePostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "LikePost"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       posts: Prisma.$PostPayload<ExtArgs>
     }
-    scalars: $Extensions.GetResult<{
+    scalars: $Extensions.GetPayloadResult<{
       id: number
       userId: number
       postId: number
@@ -3611,12 +3607,12 @@ export namespace Prisma {
 
   type LikePostGetPayload<S extends boolean | null | undefined | LikePostDefaultArgs> = $Result.GetResult<Prisma.$LikePostPayload, S>
 
-  type LikePostCountArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = 
-    Omit<LikePostFindManyArgs, 'select' | 'include'> & {
+  type LikePostCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<LikePostFindManyArgs, 'select' | 'include' | 'distinct' > & {
       select?: LikePostCountAggregateInputType | true
     }
 
-  export interface LikePostDelegate<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> {
+  export interface LikePostDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LikePost'], meta: { name: 'LikePost' } }
     /**
      * Find zero or one LikePost that matches the filter.
@@ -3966,7 +3962,7 @@ export namespace Prisma {
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__LikePostClient<T, Null = never, ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__LikePostClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
@@ -4014,7 +4010,7 @@ export namespace Prisma {
   /**
    * LikePost findUnique
    */
-  export type LikePostFindUniqueArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type LikePostFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the LikePost
      */
@@ -4033,7 +4029,7 @@ export namespace Prisma {
   /**
    * LikePost findUniqueOrThrow
    */
-  export type LikePostFindUniqueOrThrowArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type LikePostFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the LikePost
      */
@@ -4052,7 +4048,7 @@ export namespace Prisma {
   /**
    * LikePost findFirst
    */
-  export type LikePostFindFirstArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type LikePostFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the LikePost
      */
@@ -4101,7 +4097,7 @@ export namespace Prisma {
   /**
    * LikePost findFirstOrThrow
    */
-  export type LikePostFindFirstOrThrowArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type LikePostFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the LikePost
      */
@@ -4150,7 +4146,7 @@ export namespace Prisma {
   /**
    * LikePost findMany
    */
-  export type LikePostFindManyArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type LikePostFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the LikePost
      */
@@ -4194,7 +4190,7 @@ export namespace Prisma {
   /**
    * LikePost create
    */
-  export type LikePostCreateArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type LikePostCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the LikePost
      */
@@ -4213,7 +4209,7 @@ export namespace Prisma {
   /**
    * LikePost createMany
    */
-  export type LikePostCreateManyArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type LikePostCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The data used to create many LikePosts.
      */
@@ -4225,7 +4221,7 @@ export namespace Prisma {
   /**
    * LikePost update
    */
-  export type LikePostUpdateArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type LikePostUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the LikePost
      */
@@ -4248,7 +4244,7 @@ export namespace Prisma {
   /**
    * LikePost updateMany
    */
-  export type LikePostUpdateManyArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type LikePostUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The data used to update LikePosts.
      */
@@ -4263,7 +4259,7 @@ export namespace Prisma {
   /**
    * LikePost upsert
    */
-  export type LikePostUpsertArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type LikePostUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the LikePost
      */
@@ -4290,7 +4286,7 @@ export namespace Prisma {
   /**
    * LikePost delete
    */
-  export type LikePostDeleteArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type LikePostDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the LikePost
      */
@@ -4309,7 +4305,7 @@ export namespace Prisma {
   /**
    * LikePost deleteMany
    */
-  export type LikePostDeleteManyArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type LikePostDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Filter which LikePosts to delete
      */
@@ -4320,7 +4316,7 @@ export namespace Prisma {
   /**
    * LikePost without action
    */
-  export type LikePostDefaultArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type LikePostDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the LikePost
      */
@@ -4436,7 +4432,7 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type CommentPostAggregateArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Filter which CommentPost to aggregate.
      */
@@ -4508,7 +4504,7 @@ export namespace Prisma {
 
 
 
-  export type CommentPostGroupByArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CommentPostWhereInput
     orderBy?: CommentPostOrderByWithAggregationInput | CommentPostOrderByWithAggregationInput[]
     by: CommentPostScalarFieldEnum[] | CommentPostScalarFieldEnum
@@ -4551,7 +4547,7 @@ export namespace Prisma {
     >
 
 
-  export type CommentPostSelect<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type CommentPostSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     postId?: boolean
     userId?: boolean
@@ -4576,7 +4572,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type CommentPostInclude<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     post?: boolean | PostDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     commentTo?: boolean | CommentPostDefaultArgs<ExtArgs>
@@ -4585,7 +4581,7 @@ export namespace Prisma {
   }
 
 
-  export type $CommentPostPayload<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type $CommentPostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "CommentPost"
     objects: {
       post: Prisma.$PostPayload<ExtArgs>
@@ -4593,7 +4589,7 @@ export namespace Prisma {
       commentTo: Prisma.$CommentPostPayload<ExtArgs>
       commentPosts: Prisma.$CommentPostPayload<ExtArgs>[]
     }
-    scalars: $Extensions.GetResult<{
+    scalars: $Extensions.GetPayloadResult<{
       id: number
       postId: number
       userId: number
@@ -4608,12 +4604,12 @@ export namespace Prisma {
 
   type CommentPostGetPayload<S extends boolean | null | undefined | CommentPostDefaultArgs> = $Result.GetResult<Prisma.$CommentPostPayload, S>
 
-  type CommentPostCountArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = 
-    Omit<CommentPostFindManyArgs, 'select' | 'include'> & {
+  type CommentPostCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<CommentPostFindManyArgs, 'select' | 'include' | 'distinct' > & {
       select?: CommentPostCountAggregateInputType | true
     }
 
-  export interface CommentPostDelegate<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> {
+  export interface CommentPostDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CommentPost'], meta: { name: 'CommentPost' } }
     /**
      * Find zero or one CommentPost that matches the filter.
@@ -4963,7 +4959,7 @@ export namespace Prisma {
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__CommentPostClient<T, Null = never, ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__CommentPostClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
     post<T extends PostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PostDefaultArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
@@ -5017,7 +5013,7 @@ export namespace Prisma {
   /**
    * CommentPost findUnique
    */
-  export type CommentPostFindUniqueArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the CommentPost
      */
@@ -5036,7 +5032,7 @@ export namespace Prisma {
   /**
    * CommentPost findUniqueOrThrow
    */
-  export type CommentPostFindUniqueOrThrowArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the CommentPost
      */
@@ -5055,7 +5051,7 @@ export namespace Prisma {
   /**
    * CommentPost findFirst
    */
-  export type CommentPostFindFirstArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the CommentPost
      */
@@ -5104,7 +5100,7 @@ export namespace Prisma {
   /**
    * CommentPost findFirstOrThrow
    */
-  export type CommentPostFindFirstOrThrowArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the CommentPost
      */
@@ -5153,7 +5149,7 @@ export namespace Prisma {
   /**
    * CommentPost findMany
    */
-  export type CommentPostFindManyArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the CommentPost
      */
@@ -5197,7 +5193,7 @@ export namespace Prisma {
   /**
    * CommentPost create
    */
-  export type CommentPostCreateArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the CommentPost
      */
@@ -5216,7 +5212,7 @@ export namespace Prisma {
   /**
    * CommentPost createMany
    */
-  export type CommentPostCreateManyArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The data used to create many CommentPosts.
      */
@@ -5228,7 +5224,7 @@ export namespace Prisma {
   /**
    * CommentPost update
    */
-  export type CommentPostUpdateArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the CommentPost
      */
@@ -5251,7 +5247,7 @@ export namespace Prisma {
   /**
    * CommentPost updateMany
    */
-  export type CommentPostUpdateManyArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The data used to update CommentPosts.
      */
@@ -5266,7 +5262,7 @@ export namespace Prisma {
   /**
    * CommentPost upsert
    */
-  export type CommentPostUpsertArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the CommentPost
      */
@@ -5293,7 +5289,7 @@ export namespace Prisma {
   /**
    * CommentPost delete
    */
-  export type CommentPostDeleteArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the CommentPost
      */
@@ -5312,7 +5308,7 @@ export namespace Prisma {
   /**
    * CommentPost deleteMany
    */
-  export type CommentPostDeleteManyArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Filter which CommentPosts to delete
      */
@@ -5323,7 +5319,7 @@ export namespace Prisma {
   /**
    * CommentPost.commentPosts
    */
-  export type CommentPost$commentPostsArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPost$commentPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the CommentPost
      */
@@ -5344,7 +5340,7 @@ export namespace Prisma {
   /**
    * CommentPost without action
    */
-  export type CommentPostDefaultArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = {
+  export type CommentPostDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the CommentPost
      */
@@ -7899,31 +7895,31 @@ export namespace Prisma {
     /**
      * @deprecated Use UserCountOutputTypeDefaultArgs instead
      */
-    export type UserCountOutputTypeArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = UserCountOutputTypeDefaultArgs<ExtArgs>
+    export type UserCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use PostCountOutputTypeDefaultArgs instead
      */
-    export type PostCountOutputTypeArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = PostCountOutputTypeDefaultArgs<ExtArgs>
+    export type PostCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PostCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use CommentPostCountOutputTypeDefaultArgs instead
      */
-    export type CommentPostCountOutputTypeArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = CommentPostCountOutputTypeDefaultArgs<ExtArgs>
+    export type CommentPostCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CommentPostCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use UserDefaultArgs instead
      */
-    export type UserArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = UserDefaultArgs<ExtArgs>
+    export type UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserDefaultArgs<ExtArgs>
     /**
      * @deprecated Use PostDefaultArgs instead
      */
-    export type PostArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = PostDefaultArgs<ExtArgs>
+    export type PostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PostDefaultArgs<ExtArgs>
     /**
      * @deprecated Use LikePostDefaultArgs instead
      */
-    export type LikePostArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = LikePostDefaultArgs<ExtArgs>
+    export type LikePostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LikePostDefaultArgs<ExtArgs>
     /**
      * @deprecated Use CommentPostDefaultArgs instead
      */
-    export type CommentPostArgs<ExtArgs extends $Extensions.Args = $Extensions.DefaultArgs> = CommentPostDefaultArgs<ExtArgs>
+    export type CommentPostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CommentPostDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany
