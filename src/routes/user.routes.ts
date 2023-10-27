@@ -8,19 +8,19 @@ import {
   updateProfileHandler,
 } from "../controllers";
 
-export const UserRoutes = [
+export const AppRoutes = [
   {
-    path: "/user/register",
+    path: "/register",
     method: "post",
     action: registerHandler,
   },
   {
-    path: "/user/login",
+    path: "/login",
     method: "post",
     action: loginHandler,
   },
   {
-    path: "/user/authentication",
+    path: "/authentication",
     method: "post",
     action: authenticationHandler,
   },

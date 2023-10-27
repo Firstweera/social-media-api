@@ -4,7 +4,7 @@ import {
   ProtectedLikeRoutes,
   ProtectedPostRoutes,
   ProtectedUserRoutes,
-  UserRoutes,
+  AppRoutes,
 } from "./routes";
 import { authToken } from "./middleware";
 
@@ -13,7 +13,7 @@ const app: Application = express();
 app.use(cors());
 app.use(express.json());
 
-UserRoutes.forEach((route) => {
+AppRoutes.forEach((route) => {
   app[route.method as keyof Application](route.path, route.action);
 });
 
