@@ -2,6 +2,9 @@ import * as t from "io-ts";
 import { optional } from "io-ts-extra";
 
 import { Request } from "express";
+export interface CustomRequest extends Request {
+  userId: number;
+}
 
 export const registerCodec = t.type({
   email: t.string,
@@ -27,13 +30,13 @@ export interface IProfile extends t.TypeOf<typeof profileCodec> {}
 
 export const followCodec = t.type({
   friendId: t.number,
-  userId: t.number,
+  // userId: t.number,
 });
 
 export interface IFollow extends t.TypeOf<typeof followCodec> {}
 
 export const editUserCodec = t.type({
-  userId: t.number,
+  // userId: t.number,
   fname: optional(t.string),
   lname: optional(t.string),
 });

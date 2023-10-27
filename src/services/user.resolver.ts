@@ -3,7 +3,7 @@ import { IEditUser, IFollow, ILogin, IProfile, IRegister } from "../interfaces";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-export const prisma = new PrismaClient();
+export const userPrisma = new PrismaClient();
 
 export const register = async (args: IRegister) => {
   try {
@@ -12,7 +12,7 @@ export const register = async (args: IRegister) => {
       Number(process.env.SALT_ROUNDS)
     );
 
-    await prisma.user.create({
+    await userPrisma.user.create({
       data: {
         email: args?.email,
         password: hashPassword,
@@ -36,7 +36,7 @@ export const login = async (args: ILogin) => {
       throw new Error("Email and password are required.");
     }
 
-    const [user] = await prisma.user.findMany({
+    const [user] = await userPrisma.user.findMany({
       where: {
         email: args.email,
       },
@@ -71,9 +71,9 @@ export const login = async (args: ILogin) => {
 
 export const authentication = async (authHeader: string) => {
   try {
+    console.log("Authentication is enabled", process.env.JWT_SECRET_KEY);
     const token = authHeader?.split(" ")[1];
-    console.log("token", token);
-    const decoded = jwt.verify(token, process.env.SECRET_KEY as string);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string);
     return decoded;
   } catch (e) {
     console.error(e);
@@ -83,7 +83,7 @@ export const authentication = async (authHeader: string) => {
 
 export const profile = async (args: IProfile) => {
   try {
-    const profile = await prisma.user.findUnique({
+    const profile = await userPrisma.user.findUnique({
       where: {
         id: args?.userId,
       },
@@ -104,10 +104,10 @@ export const profile = async (args: IProfile) => {
   }
 };
 
-export const editProfile = async (args: IEditUser) => {
+export const editProfile = async (args: IEditUser, userId: number) => {
   try {
-    const edit = await prisma.user.update({
-      where: { id: args?.userId },
+    const edit = await userPrisma.user.update({
+      where: { id: userId },
       data: {
         fname: args?.fname ?? undefined,
         lname: args?.lname ?? undefined,
@@ -123,11 +123,11 @@ export const editProfile = async (args: IEditUser) => {
   }
 };
 
-export const follows = async (args: IFollow) => {
+export const follows = async (args: IFollow, userId: number) => {
   try {
-    const updatedUser = await prisma.user.update({
+    const updatedUser = await userPrisma.user.update({
       where: { id: args?.friendId },
-      data: { follows: { connect: { id: args?.userId } } },
+      data: { follows: { connect: { id: userId } } },
     });
 
     if (!updatedUser) {
@@ -141,11 +141,11 @@ export const follows = async (args: IFollow) => {
   }
 };
 
-export const unFollows = async (args: IFollow) => {
+export const unFollows = async (args: IFollow, userId: number) => {
   try {
-    const updatedUser = await prisma.user.update({
+    const updatedUser = await userPrisma.user.update({
       where: { id: args?.friendId },
-      data: { follows: { disconnect: { id: args?.userId } } },
+      data: { follows: { disconnect: { id: userId } } },
     });
 
     if (!updatedUser) {

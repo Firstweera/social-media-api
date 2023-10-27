@@ -5,6 +5,7 @@ import {
   loginHandler,
   profileHandler,
   registerHandler,
+  unFollowHandler,
 } from "../controllers";
 
 export const UserRoutes = [
@@ -23,6 +24,9 @@ export const UserRoutes = [
     method: "post",
     action: authenticationHandler,
   },
+];
+
+export const ProtectedUserRoutes = [
   {
     path: "/user/follow",
     method: "post",
@@ -31,7 +35,7 @@ export const UserRoutes = [
   {
     path: "/user/unFollow",
     method: "post",
-    action: followHandler,
+    action: unFollowHandler,
   },
   {
     path: "/user/profile",

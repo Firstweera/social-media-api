@@ -5,15 +5,10 @@ import {
   loginCodec,
   registerCodec,
   editUserCodec,
+  CustomRequest,
 } from "../interfaces";
-import {
-  authentication,
-  editProfile,
-  follows,
-  login,
-  profile,
-  register,
-} from "../services";
+import { authentication, editProfile, follows, login, profile, register, unFollows } from "../services/user.resolver";
+
 
 export const registerHandler = async (req: Request, res: Response) => {
   const args = req?.body;
@@ -75,12 +70,13 @@ export const profileHandler = async (req: Request, res: Response) => {
   }
 };
 
-export const editProfileHandler = async (req: Request, res: Response) => {
+export const editProfileHandler = async (req: CustomRequest, res: Response) => {
   const args = req?.body;
+  const userId = req?.userId;
 
   if (editUserCodec.decode(args)._tag === "Right") {
     try {
-      const result = await editProfile(args);
+      const result = await editProfile(args, userId);
       res.status(200).json({ status: "ok" });
     } catch (e) {
       res.status(500).json({ error: String(e) });
@@ -90,12 +86,13 @@ export const editProfileHandler = async (req: Request, res: Response) => {
   }
 };
 
-export const followHandler = async (req: Request, res: Response) => {
+export const followHandler = async (req: CustomRequest, res: Response) => {
   const args = req?.body;
+  const userId = req?.userId;
 
   if (followCodec.decode(args)._tag === "Right") {
     try {
-      const result = await follows(args);
+      const result = await follows(args, userId);
       res.status(200).json({ status: "ok" });
     } catch (e) {
       res.status(500).json({ error: String(e) });
@@ -105,12 +102,13 @@ export const followHandler = async (req: Request, res: Response) => {
   }
 };
 
-export const unFollowHandler = async (req: Request, res: Response) => {
+export const unFollowHandler = async (req: CustomRequest, res: Response) => {
   const args = req?.body;
+  const userId = req?.userId;
 
   if (followCodec.decode(args)._tag === "Right") {
     try {
-      const result = await follows(args);
+      const result = await unFollows(args, userId);
       res.status(200).json({ status: "ok" });
     } catch (e) {
       res.status(500).json({ error: String(e) });
