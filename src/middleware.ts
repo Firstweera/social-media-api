@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { JwtPayload } from "jsonwebtoken";
-import { authentication } from "./services/user.resolver";
-import { CustomRequest } from "./interfaces/user.interface";
+import { authentication } from "./services";
+import { CustomRequest } from "./interfaces";
 
 export const authToken = async (
   req: CustomRequest,

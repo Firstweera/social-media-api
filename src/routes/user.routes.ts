@@ -1,11 +1,11 @@
 import {
   authenticationHandler,
-  editProfileHandler,
   followHandler,
   loginHandler,
   profileHandler,
   registerHandler,
   unFollowHandler,
+  updateProfileHandler,
 } from "../controllers";
 
 export const UserRoutes = [
@@ -43,8 +43,8 @@ export const ProtectedUserRoutes = [
     action: profileHandler,
   },
   {
-    path: "/user/editProfile",
+    path: "/user/updateProfile",
     method: "post",
-    action: editProfileHandler,
+    action: updateProfileHandler,
   },
 ];

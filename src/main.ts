@@ -1,6 +1,11 @@
 import express, { Application } from "express";
 import cors from "cors";
-import { ProtectedUserRoutes, UserRoutes } from "./routes";
+import {
+  ProtectedLikeRoutes,
+  ProtectedPostRoutes,
+  ProtectedUserRoutes,
+  UserRoutes,
+} from "./routes";
 import { authToken } from "./middleware";
 
 const app: Application = express();
@@ -13,6 +18,14 @@ UserRoutes.forEach((route) => {
 });
 
 ProtectedUserRoutes.forEach((route) => {
+  app[route.method as keyof Application](route.path, authToken, route.action);
+});
+
+ProtectedPostRoutes.forEach((route) => {
+  app[route.method as keyof Application](route.path, authToken, route.action);
+});
+
+ProtectedLikeRoutes.forEach((route) => {
   app[route.method as keyof Application](route.path, authToken, route.action);
 });
 

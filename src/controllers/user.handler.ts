@@ -4,11 +4,18 @@ import {
   followCodec,
   loginCodec,
   registerCodec,
-  editUserCodec,
   CustomRequest,
+  updateUserCodec,
 } from "../interfaces";
-import { authentication, editProfile, follows, login, profile, register, unFollows } from "../services/user.resolver";
-
+import {
+  authentication,
+  follows,
+  login,
+  profile,
+  register,
+  unFollows,
+  updateProfile,
+} from "../services";
 
 export const registerHandler = async (req: Request, res: Response) => {
   const args = req?.body;
@@ -70,13 +77,16 @@ export const profileHandler = async (req: Request, res: Response) => {
   }
 };
 
-export const editProfileHandler = async (req: CustomRequest, res: Response) => {
+export const updateProfileHandler = async (
+  req: CustomRequest,
+  res: Response
+) => {
   const args = req?.body;
   const userId = req?.userId;
 
-  if (editUserCodec.decode(args)._tag === "Right") {
+  if (updateUserCodec.decode(args)._tag === "Right") {
     try {
-      const result = await editProfile(args, userId);
+      const result = await updateProfile(args, userId);
       res.status(200).json({ status: "ok" });
     } catch (e) {
       res.status(500).json({ error: String(e) });

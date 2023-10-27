@@ -1,5 +1,11 @@
 import { PrismaClient } from "../../prisma/client";
-import { IEditUser, IFollow, ILogin, IProfile, IRegister } from "../interfaces";
+import {
+  IFollow,
+  ILogin,
+  IProfile,
+  IRegister,
+  IUpdateUser,
+} from "../interfaces";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -71,7 +77,7 @@ export const login = async (args: ILogin) => {
 
 export const authentication = async (authHeader: string) => {
   try {
-    console.log("Authentication is enabled", process.env.JWT_SECRET_KEY);
+    // console.log("Authentication is enabled", process.env.JWT_SECRET_KEY);
     const token = authHeader?.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string);
     return decoded;
@@ -104,9 +110,9 @@ export const profile = async (args: IProfile) => {
   }
 };
 
-export const editProfile = async (args: IEditUser, userId: number) => {
+export const updateProfile = async (args: IUpdateUser, userId: number) => {
   try {
-    const edit = await userPrisma.user.update({
+    const update = await userPrisma.user.update({
       where: { id: userId },
       data: {
         fname: args?.fname ?? undefined,
@@ -114,7 +120,7 @@ export const editProfile = async (args: IEditUser, userId: number) => {
       },
     });
 
-    if (!edit) {
+    if (!update) {
       throw new Error("User not found.");
     }
   } catch (e) {

@@ -2,6 +2,7 @@ import * as t from "io-ts";
 import { optional } from "io-ts-extra";
 
 import { Request } from "express";
+
 export interface CustomRequest extends Request {
   userId: number;
 }
@@ -35,10 +36,10 @@ export const followCodec = t.type({
 
 export interface IFollow extends t.TypeOf<typeof followCodec> {}
 
-export const editUserCodec = t.type({
+export const updateUserCodec = t.type({
   // userId: t.number,
   fname: optional(t.string),
   lname: optional(t.string),
 });
 
-export interface IEditUser extends t.TypeOf<typeof editUserCodec> {}
+export interface IUpdateUser extends t.TypeOf<typeof updateUserCodec> {}
