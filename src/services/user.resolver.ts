@@ -164,3 +164,38 @@ export const unFollows = async (args: IFollow, userId: number) => {
     throw new Error("Follow failed: " + e.message);
   }
 };
+
+export const getFriends = async (userId: number) => {
+  try {
+    const friends = await userPrisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        toFollows: {
+          where: {
+            follows: {
+              some: {
+                id: userId,
+              },
+            },
+          },
+          select: {
+            id: true,
+            fname: true,
+            lname: true,
+          },
+        },
+      },
+    });
+
+    if (!friends) {
+      throw new Error("User not found or has no friends.");
+    }
+
+    return friends.toFollows;
+  } catch (e) {
+    console.error(e);
+    throw new Error("Failed to fetch friends who are mutual followers.");
+  }
+};

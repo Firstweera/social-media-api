@@ -1,6 +1,7 @@
 import {
   authenticationHandler,
   followHandler,
+  getFriendsHandler,
   loginHandler,
   profileHandler,
   registerHandler,
@@ -46,5 +47,10 @@ export const ProtectedUserRoutes = [
     path: "/user/updateProfile",
     method: "post",
     action: updateProfileHandler,
+  },
+  {
+    path: "/user/getFriends",
+    method: "get",
+    action: getFriendsHandler,
   },
 ];

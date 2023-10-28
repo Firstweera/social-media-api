@@ -10,6 +10,7 @@ import {
 import {
   authentication,
   follows,
+  getFriends,
   login,
   profile,
   register,
@@ -125,5 +126,16 @@ export const unFollowHandler = async (req: CustomRequest, res: Response) => {
     }
   } else {
     res.status(500).json({ error: "Error invalid codec" });
+  }
+};
+
+export const getFriendsHandler = async (req: CustomRequest, res: Response) => {
+  const userId = req?.userId;
+
+  try {
+    const result = await getFriends(userId);
+    res.status(200).json({ status: "ok", result });
+  } catch (e) {
+    res.status(500).json({ error: String(e) });
   }
 };

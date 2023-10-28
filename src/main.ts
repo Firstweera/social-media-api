@@ -5,6 +5,7 @@ import {
   ProtectedPostRoutes,
   ProtectedUserRoutes,
   AppRoutes,
+  ProtectedCommentRoutes,
 } from "./routes";
 import { authToken } from "./middleware";
 
@@ -26,6 +27,10 @@ ProtectedPostRoutes.forEach((route) => {
 });
 
 ProtectedLikeRoutes.forEach((route) => {
+  app[route.method as keyof Application](route.path, authToken, route.action);
+});
+
+ProtectedCommentRoutes.forEach((route) => {
   app[route.method as keyof Application](route.path, authToken, route.action);
 });
 
