@@ -6,6 +6,7 @@ import {
   registerCodec,
   CustomRequest,
   updateUserCodec,
+  searchUserCodec,
 } from "../interfaces";
 import {
   authentication,
@@ -14,6 +15,7 @@ import {
   login,
   profile,
   register,
+  searchUser,
   unFollows,
   updateProfile,
 } from "../services";
@@ -69,6 +71,21 @@ export const profileHandler = async (req: Request, res: Response) => {
   if (profileCodec.decode(args)._tag === "Right") {
     try {
       const result = await profile(args);
+      res.status(200).json({ status: "ok", data: result });
+    } catch (e) {
+      res.status(500).json({ error: String(e) });
+    }
+  } else {
+    res.status(500).json({ error: "Error invalid codec" });
+  }
+};
+
+export const searchUserHandler = async (req: Request, res: Response) => {
+  const args = req?.body;
+
+  if (searchUserCodec.decode(args)._tag === "Right") {
+    try {
+      const result = await searchUser(args);
       res.status(200).json({ status: "ok", data: result });
     } catch (e) {
       res.status(500).json({ error: String(e) });

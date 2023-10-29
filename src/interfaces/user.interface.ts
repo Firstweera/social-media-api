@@ -43,3 +43,9 @@ export const updateUserCodec = t.type({
 });
 
 export interface IUpdateUser extends t.TypeOf<typeof updateUserCodec> {}
+
+export const searchUserCodec = t.type({
+  searchInput: t.string,
+});
+
+export interface ISearchUser extends t.TypeOf<typeof searchUserCodec> {}

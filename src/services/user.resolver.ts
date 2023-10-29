@@ -4,6 +4,7 @@ import {
   ILogin,
   IProfile,
   IRegister,
+  ISearchUser,
   IUpdateUser,
 } from "../interfaces";
 import bcrypt from "bcrypt";
@@ -107,6 +108,54 @@ export const profile = async (args: IProfile) => {
   } catch (e) {
     console.error(e);
     throw new Error("GET Profile failed");
+  }
+};
+
+export const searchUser = async (args: ISearchUser) => {
+  // console.log("searchInput", args);
+
+  try {
+    const users = await userPrisma.user.findMany({
+      where: {
+        OR: [
+          {
+            fname: {
+              contains: args.searchInput,
+              mode: "insensitive",
+            },
+          },
+          {
+            lname: {
+              contains: args.searchInput,
+              mode: "insensitive",
+            },
+          },
+          {
+            fname: {
+              contains: args.searchInput.split(" ")[0],
+              mode: "insensitive",
+            },
+            lname: {
+              contains: args.searchInput.split(" ")[1],
+              mode: "insensitive",
+            },
+          },
+        ],
+      },
+    });
+
+    if (users.length === 0) {
+      throw new Error("User not found.");
+    }
+
+    return users.map((user: { id: number; fname: string; lname: string }) => ({
+      id: user.id,
+      fname: user.fname,
+      lname: user.lname,
+    }));
+  } catch (e) {
+    console.error(e);
+    throw new Error("Search User failed");
   }
 };
 
