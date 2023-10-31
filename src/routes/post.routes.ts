@@ -3,6 +3,7 @@ import {
   deletePostHandler,
   getAllPostFollowingHandler,
   getAllPostHandler,
+  getPostByUseIdrHandler,
   getPostByUserHandler,
   updatePostHandler,
 } from "../controllers";
@@ -41,6 +42,6 @@ export const ProtectedPostRoutes = [
   {
     path: "/post/getByUserId",
     method: "post",
-    action: getPostByUserHandler,
+    action: getPostByUseIdrHandler,
   },
 ];
