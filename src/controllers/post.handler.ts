@@ -11,6 +11,7 @@ import {
   getAllPosts,
   getAllPostsFollowing,
   getPostByUser,
+  getPostByUserId,
   updatePost,
 } from "../services";
 
@@ -93,6 +94,20 @@ export const getPostByUserHandler = async (
 
   try {
     const result = await getPostByUser(userId);
+    res.status(200).json({ status: "ok", data: result });
+  } catch (e) {
+    res.status(500).json({ error: String(e) });
+  }
+};
+
+export const getPostByUseIdrHandler = async (
+  req: CustomRequest,
+  res: Response
+) => {
+  const userId = req?.userId;
+
+  try {
+    const result = await getPostByUserId(userId);
     res.status(200).json({ status: "ok", data: result });
   } catch (e) {
     res.status(500).json({ error: String(e) });

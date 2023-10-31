@@ -38,4 +38,9 @@ export const ProtectedPostRoutes = [
     method: "get",
     action: getAllPostFollowingHandler,
   },
+  {
+    path: "/post/getByUserId",
+    method: "get",
+    action: getPostByUserHandler,
+  },
 ];

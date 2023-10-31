@@ -236,3 +236,48 @@ export const getPostByUser = async (userId: number) => {
     throw new Error("GET Posts failed");
   }
 };
+
+export const getPostByUserId = async (userId: number) => {
+  try {
+    const userPosts = await postPrisma.post.findMany({
+      where: {
+        userId: userId,
+      },
+      include: {
+        user: {
+          select: {
+            fname: true,
+            lname: true,
+          },
+        },
+        likes: {
+          select: {
+            userId: true,
+          },
+        },
+        commentPosts: {
+          select: {
+            message: true,
+            commentTo: true,
+            postId: true,
+            updatedAt: true,
+            user: {
+              select: {
+                fname: true,
+                lname: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
+    });
+
+    return userPosts;
+  } catch (e) {
+    console.error(e);
+    throw new Error("GET Posts failed");
+  }
+};
