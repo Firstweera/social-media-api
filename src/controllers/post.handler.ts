@@ -4,6 +4,7 @@ import {
   deletePostCodec,
   updatePostCodec,
   CustomRequest,
+  getPostByUserIdCodec,
 } from "../interfaces";
 import {
   createPost,
@@ -100,16 +101,17 @@ export const getPostByUserHandler = async (
   }
 };
 
-export const getPostByUseIdrHandler = async (
-  req: CustomRequest,
-  res: Response
-) => {
-  const userId = req?.userId;
+export const getPostByUseIdrHandler = async (req: Request, res: Response) => {
+  const args = req?.body;
 
-  try {
-    const result = await getPostByUserId(userId);
-    res.status(200).json({ status: "ok", data: result });
-  } catch (e) {
-    res.status(500).json({ error: String(e) });
+  if (getPostByUserIdCodec.decode(args)._tag === "Right") {
+    try {
+      const result = await getPostByUserId(args);
+      res.status(200).json({ status: "ok", data: result });
+    } catch (e) {
+      res.status(500).json({ error: String(e) });
+    }
+  } else {
+    res.status(500).json({ error: "Error invalid codec" });
   }
 };

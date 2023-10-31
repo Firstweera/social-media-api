@@ -19,3 +19,8 @@ export const deletePostCodec = t.type({
 
 export interface IDeletePost extends t.TypeOf<typeof deletePostCodec> {}
 
+export const getPostByUserIdCodec = t.type({
+  userId: t.number,
+});
+
+export interface IGetPostByUserIdCodec extends t.TypeOf<typeof getPostByUserIdCodec> {}

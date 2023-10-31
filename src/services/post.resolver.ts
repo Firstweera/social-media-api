@@ -1,5 +1,5 @@
 import { PrismaClient } from "../../prisma/client";
-import { ICreatePost, IDeletePost, IUpdatePost } from "../interfaces";
+import { ICreatePost, IDeletePost, IGetPostByUserIdCodec, IUpdatePost } from "../interfaces";
 
 export const postPrisma = new PrismaClient();
 
@@ -237,11 +237,11 @@ export const getPostByUser = async (userId: number) => {
   }
 };
 
-export const getPostByUserId = async (userId: number) => {
+export const getPostByUserId = async (args: IGetPostByUserIdCodec) => {
   try {
     const userPosts = await postPrisma.post.findMany({
       where: {
-        userId: userId,
+        userId: args?.userId,
       },
       include: {
         user: {
