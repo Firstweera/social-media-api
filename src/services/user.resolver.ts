@@ -235,6 +235,11 @@ export const getFriends = async (userId: number) => {
             lname: true,
           },
         },
+        follows: {
+          select: {
+            id: true
+          }
+        }
       },
     });
 
