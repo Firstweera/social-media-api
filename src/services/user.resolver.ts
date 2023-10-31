@@ -94,6 +94,21 @@ export const profile = async (args: IProfile) => {
       where: {
         id: args?.userId,
       },
+      select: {
+        id: true, // You also need to select the id
+        fname: true,
+        lname: true,
+        follows: {
+          select: {
+            id: true,
+          },
+        },
+        toFollows: {
+          select: {
+            id: true,
+          },
+        },
+      },
     });
 
     if (!profile) {
@@ -104,12 +119,15 @@ export const profile = async (args: IProfile) => {
       id: profile.id,
       fname: profile.fname,
       lname: profile.lname,
+      follows: profile.follows, // Access follows from the profile object
+      toFollows: profile.toFollows, // Access toFollows from the profile object
     };
   } catch (e) {
     console.error(e);
     throw new Error("GET Profile failed");
   }
 };
+
 
 export const searchUser = async (args: ISearchUser) => {
   // console.log("searchInput", args);
