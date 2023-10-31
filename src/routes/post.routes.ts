@@ -40,7 +40,7 @@ export const ProtectedPostRoutes = [
   },
   {
     path: "/post/getByUserId",
-    method: "get",
+    method: "post",
     action: getPostByUserHandler,
   },
 ];
