@@ -53,7 +53,7 @@ export const updatePost = async (args: IUpdatePost, userId: number) => {
 };
 
 export const deletePost = async (args: IDeletePost, userId: number) => {
-  console.log("args: " + args?.postId, "userId: " + userId);
+  // console.log("args: " + args?.postId, "userId: " + userId);
 
   try {
     // Check if the post exists and the user has permission to delete it
