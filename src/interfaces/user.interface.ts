@@ -49,3 +49,9 @@ export const searchUserCodec = t.type({
 });
 
 export interface ISearchUser extends t.TypeOf<typeof searchUserCodec> {}
+
+export const getPostByUserIdCodec = t.type({
+  userId: t.number,
+});
+
+export interface IGetPostByUserIdCodec extends t.TypeOf<typeof getPostByUserIdCodec> {}

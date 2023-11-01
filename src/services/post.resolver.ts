@@ -1,5 +1,10 @@
 import { PrismaClient } from "../../prisma/client";
-import { ICreatePost, IDeletePost, IGetPostByUserIdCodec, IUpdatePost } from "../interfaces";
+import {
+  ICreatePost,
+  IDeletePost,
+  IGetPostByUserIdCodec,
+  IUpdatePost,
+} from "../interfaces";
 
 export const postPrisma = new PrismaClient();
 
@@ -48,15 +53,32 @@ export const updatePost = async (args: IUpdatePost, userId: number) => {
 };
 
 export const deletePost = async (args: IDeletePost, userId: number) => {
+  console.log("args: " + args?.postId, "userId: " + userId);
+
   try {
+    // Check if the post exists and the user has permission to delete it
     const existingPost = await postPrisma.post.findUnique({
       where: { id: args?.postId },
     });
 
+    // console.log("found post: " + existingPost);
+
     if (!existingPost || existingPost.userId !== userId) {
+      // console.log("test", existingPost?.userId);
       throw new Error("Permission denied. You cannot delete this post.");
     }
 
+    // Delete related records in the LikePost table first
+    await postPrisma.likePost.deleteMany({
+      where: { postId: args?.postId },
+    });
+
+    // Delete related records in the CommentPost table first
+    await postPrisma.commentPost.deleteMany({
+      where: { postId: args?.postId },
+    });
+
+    // Now, you can safely delete the post
     const deletedPost = await postPrisma.post.delete({
       where: { id: args?.postId },
     });
@@ -64,7 +86,7 @@ export const deletePost = async (args: IDeletePost, userId: number) => {
     return {
       message: "This Post has been deleted!.",
     };
-  } catch (e) {
+  } catch (e: any) {
     console.error(e);
     throw new Error("Delete Post failed");
   }
