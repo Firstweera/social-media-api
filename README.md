@@ -6,6 +6,10 @@ Welcome to the Social Media Backend project, the backend server for a social med
 
 - **TypeScript 5.0.2**: A typed superset of JavaScript for enhanced development.
 
+## Database
+
+- **Supabase**: A powerful open-source platform that provides authentication, real-time data synchronization, and more for your application.
+
 ## Dependencies
 
 - **@prisma/client 5.5.2**: Prisma client for database operations.
